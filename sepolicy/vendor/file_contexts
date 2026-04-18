@@ -1,0 +1,19 @@
+#
+# Copyright (C) 2023 Paranoid Android
+# SPDX-License-Identifier: Apache-2.0
+#
+# file_contexts for vendor/xiaomi/camera
+#
+# Android 16 notes:
+#  - Only label files that are actually shipped by this vendor tree.
+#  - System-partition libs (system/lib64/libcamera_*.so etc.) auto-inherit
+#    the system_file label from their parent directory — no explicit entries
+#    needed here for those.
+#  - The vendor.mediatek.hardware.camera.isphal@1.0.so is loaded as a
+#    same-process HAL by the camera JNI layer, so it needs this label
+#    even though it lands on the system partition here (because Soong
+#    cc_prebuilt_library_shared without vendor:true → system/lib64/).
+#  - Dead entries for vendor libs not shipped by this tree have been removed.
+
+# MTK ISP HAL — loaded in-process by libcamera_ispinterface_jni.xiaomi.so
+/system/lib64/vendor\.mediatek\.hardware\.camera\.isphal@1\.0\.so    u:object_r:same_process_hal_file:s0

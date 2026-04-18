@@ -1,0 +1,45 @@
+# miuicamera.te — SELinux policy for MIUI Camera (com.android.camera)
+#
+# Copyright (C) 2023 Paranoid Android
+# SPDX-License-Identifier: Apache-2.0
+#
+# Android 16 notes:
+#  - priv_app is the correct domain for privileged system apps installed
+#    under /system/priv-app/.
+#  - vendor_file labels files on the VENDOR partition (/vendor/lib64/).
+#    The ISP HAL .so in this tree lands on the SYSTEM partition (system/lib64/)
+#    where file_contexts labels it same_process_hal_file — use that type here.
+#  - mtk_hal_camera_service is a DEVICE-SPECIFIC type that may not exist in
+#    your ROM's base policy. It is left commented out below with instructions
+#    to add it only if your ROM already defines that type.
+#
+# After first boot with MiuiCamera installed, collect real denials with:
+#   adb logcat -s "auditd" | grep "avc: denied"
+#   adb logcat -s "auditd" | grep "avc: denied" | audit2allow -p \
+#       out/target/product/<device>/root/sepolicy
+# and add ONLY the rules that actually trigger.
+
+# ── GED GPU kicker node ────────────────────────────────────────────────────
+# Needed by libged_kpi.so and libged_sys.so to report frame timing to the
+# GPU governor driver (/dev/ged).
+allow priv_app ged_device:chr_file { read write open ioctl };
+
+# ── Same-process HAL libs on system partition ──────────────────────────────
+# vendor.mediatek.hardware.camera.isphal@1.0.so is installed to system/lib64/
+# and labeled same_process_hal_file (see sepolicy/vendor/file_contexts).
+# priv_app needs execute permission to dlopen it.
+allow priv_app same_process_hal_file:file { read open getattr execute execute_no_trans };
+
+# ── Camera device nodes ────────────────────────────────────────────────────
+# Standard access to /dev/video* nodes via the camera2 HAL path.
+allow priv_app video_device:chr_file { read write open ioctl };
+
+# ── MTK ISP HAL HIDL service (device-specific) ────────────────────────────
+# Uncomment the line below ONLY if your ROM's base sepolicy already defines
+# the type "mtk_hal_camera_service". If the type is absent, the line will
+# cause a build error: "unknown type mtk_hal_camera_service".
+#
+# To check: grep -r "mtk_hal_camera_service" device/<vendor>/<device>/sepolicy/
+# If found there or in the platform policy, uncomment:
+#
+# allow priv_app mtk_hal_camera_service:service_manager { find };

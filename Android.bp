@@ -1,0 +1,193 @@
+// Copyright (C) 2023 Paranoid Android
+// SPDX-License-Identifier: Apache-2.0
+//
+// Ported for Android 16 compatibility.
+// Native libs moved from PRODUCT_COPY_FILES to cc_prebuilt_library_shared
+// (ELF PRODUCT_COPY_FILES is restricted/broken in Android 15+).
+// enforce_uses_libs disabled because MiuiCamera manifest references MIUI-only
+// framework jars that do not exist in AOSP.
+
+soong_namespace {
+}
+
+// ──────────────────────────────────────────────
+//  MiuiCamera APK
+// ──────────────────────────────────────────────
+android_app_import {
+    name: "MiuiCamera",
+    owner: "xiaomi",
+    apk: "proprietary/system/priv-app/MiuiCamera/MiuiCamera.apk",
+    overrides: [
+        "Aperture",
+        "Camera",
+        "Camera2",
+        "GoogleCameraGo",
+    ],
+    // PRESIGNED: keep the original MIUI signature so the APK is not
+    // re-signed with the ROM platform key (avoids certificate mismatch
+    // with companion libs that check signatures at runtime).
+    certificate: "PRESIGNED",
+    privileged: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    // Android 15+ strictly enforces every <uses-library> tag declared in
+    // the APK manifest.  MiuiCamera references MIUI-only jars
+    // (miui-stat.jar, miuisdk.jar, etc.) that are absent from AOSP.
+    // Disabling the check here prevents a hard build/dexopt failure.
+    enforce_uses_libs: false,
+    // Tell Soong which optional libs exist so the class-loader context
+    // recorded in the .odex is still valid for the libs we DO ship.
+    optional_uses_libs: [
+        "org.apache.http.legacy",
+        "android.test.base",
+    ],
+}
+
+// ──────────────────────────────────────────────
+//  Native libraries
+//  (Android 15+ forbids ELF files in PRODUCT_COPY_FILES; use
+//   cc_prebuilt_library_shared + PRODUCT_PACKAGES instead)
+// ──────────────────────────────────────────────
+
+cc_prebuilt_library_shared {
+    name: "libcamera_algoup_jni.xiaomi",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/libcamera_algoup_jni.xiaomi.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    // Re-links against our renamed libgui stub (see extract-files.sh patchelf)
+    shared_libs: ["libgui-xiaomi"],
+    check_elf_files: false,
+    prefer: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libcamera_ispinterface_jni.xiaomi",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/libcamera_ispinterface_jni.xiaomi.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    check_elf_files: false,
+    prefer: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libcamera_mianode_jni.xiaomi",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/libcamera_mianode_jni.xiaomi.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    shared_libs: ["libgui-xiaomi"],
+    check_elf_files: false,
+    prefer: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libged_kpi",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/libged_kpi.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    check_elf_files: false,
+    prefer: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libged_sys",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/libged_sys.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    check_elf_files: false,
+    prefer: true,
+}
+
+// libgui-xiaomi: renamed/patched copy of libgui.so from MIUI firmware.
+// The three JNI libs above have had their DT_NEEDED rewritten to this name
+// by extract-files.sh (patchelf --replace-needed libgui.so libgui-xiaomi.so).
+cc_prebuilt_library_shared {
+    name: "libgui-xiaomi",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/libgui-xiaomi.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    check_elf_files: false,
+    prefer: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "libmtkisp_metadata_sys",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/libmtkisp_metadata_sys.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    check_elf_files: false,
+    prefer: true,
+}
+
+cc_prebuilt_library_shared {
+    name: "vendor.mediatek.hardware.camera.isphal@1.0",
+    owner: "xiaomi",
+    strip: {
+        none: true,
+    },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/vendor.mediatek.hardware.camera.isphal@1.0.so"],
+        },
+    },
+    compile_multilib: "64",
+    system_shared_libs: [],
+    check_elf_files: false,
+    prefer: true,
+}

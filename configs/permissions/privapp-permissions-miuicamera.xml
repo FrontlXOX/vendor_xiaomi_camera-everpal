@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+   <privapp-permissions package="com.android.camera">
+
+      <!-- ── Permissions we GRANT ─────────────────────────────────────────
+           Only permissions with protectionLevel = signature|privileged
+           can be granted to a PRESIGNED app via this file.              -->
+
+      <!-- Media management (signature|privileged, Android 11+) -->
+      <permission name="android.permission.MANAGE_MEDIA" />
+
+      <!-- Settings (signature|privileged — granted to privileged apps) -->
+      <permission name="android.permission.WRITE_SECURE_SETTINGS" />
+
+      <!-- Cross-user (signature|privileged) -->
+      <permission name="android.permission.INTERACT_ACROSS_USERS" />
+
+      <!-- Background activity launch (signature|privileged, Android 10+) -->
+      <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND" />
+
+      <!-- System-level camera access without user prompt (signature|privileged) -->
+      <permission name="android.permission.SYSTEM_CAMERA" />
+
+      <!-- Device identifiers (signature|privileged, Android 10+) -->
+      <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+
+      <!-- Overlay management (signature|privileged, Android 12+) -->
+      <permission name="android.permission.HIDE_OVERLAY_WINDOWS" />
+
+      <!-- ── Permissions we DENY ──────────────────────────────────────────
+           These are declared in the MIUI APK manifest but cannot be granted
+           to a PRESIGNED (non-platform-signed) app. Explicit deny prevents
+           bootloop on Android 9+ when PM finds an ungrantable priv perm.  -->
+
+      <!-- Deprecated in Android 10; was signatureOrSystem; cannot grant to PRESIGNED -->
+      <deny-permission name="android.permission.WRITE_MEDIA_STORAGE" />
+
+      <!-- signatureOrSystem — cannot grant to PRESIGNED app -->
+      <deny-permission name="android.permission.UPDATE_DEVICE_STATS" />
+
+      <!-- pure signature — cannot be granted to PRESIGNED app at all -->
+      <deny-permission name="android.permission.MANAGE_APP_OPS_MODES" />
+
+      <!-- internal|signature — same; these are framework-internal only -->
+      <deny-permission name="android.permission.LOG_COMPAT_CHANGE" />
+      <deny-permission name="android.permission.READ_COMPAT_CHANGE_CONFIG" />
+
+   </privapp-permissions>
+</permissions>

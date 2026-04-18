@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     default-permissions-miuicamera.xml
+     Pre-grants dangerous (runtime) permissions for MiuiCamera so the user
+     isn't nagged on first launch.
+
+     Rules:
+       • Only DANGEROUS (runtime) permissions belong here.
+         Non-dangerous permissions (signature, signatureOrSystem, etc.)
+         are silently ignored or cause ParseException on strict builds.
+       • fixed="true"  → user CANNOT revoke; only for permissions where
+                          revocation would make the app completely unusable
+                          AND there is no UX alternative.
+       • fixed="false" → user CAN revoke at any time (preferred default).
+         CDD § 9.1 prohibits locking permissions that users expect to control.
+-->
+<exceptions>
+    <exception package="com.android.camera">
+
+        <!-- Camera: fixed because revoking breaks the app entirely -->
+        <permission name="android.permission.CAMERA"
+            fixed="true" />
+
+        <!-- Microphone: fixed because video recording is a core feature -->
+        <permission name="android.permission.RECORD_AUDIO"
+            fixed="true" />
+
+        <!-- Location: NOT fixed — users have a legitimate reason to deny -->
+        <permission name="android.permission.ACCESS_FINE_LOCATION"
+            fixed="false" />
+        <permission name="android.permission.ACCESS_COARSE_LOCATION"
+            fixed="false" />
+
+        <!-- Phone state: NOT fixed — only used for call interruption handling -->
+        <permission name="android.permission.READ_PHONE_STATE"
+            fixed="false" />
+
+        <!-- Storage (Android 10-12 legacy; ignored on 13+ but harmless) -->
+        <permission name="android.permission.READ_EXTERNAL_STORAGE"
+            fixed="false" />
+        <permission name="android.permission.WRITE_EXTERNAL_STORAGE"
+            fixed="false" />
+
+        <!-- Storage (Android 13+ scoped model) -->
+        <permission name="android.permission.READ_MEDIA_IMAGES"
+            fixed="false" />
+        <permission name="android.permission.READ_MEDIA_VIDEO"
+            fixed="false" />
+
+        <!-- EXIF location in saved photos: NOT fixed -->
+        <permission name="android.permission.ACCESS_MEDIA_LOCATION"
+            fixed="false" />
+
+        <!-- Notifications (Android 13+): user should always control this -->
+        <permission name="android.permission.POST_NOTIFICATIONS"
+            fixed="false"/>
+
+    </exception>
+</exceptions>
