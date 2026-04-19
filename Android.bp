@@ -26,7 +26,7 @@ android_app_import {
     // PRESIGNED: keep the original MIUI signature so the APK is not
     // re-signed with the ROM platform key (avoids certificate mismatch
     // with companion libs that check signatures at runtime).
-    certificate: "PRESIGNED",
+    preprocessed: true,
     privileged: true,
     dex_preopt: {
         enabled: false,
@@ -167,23 +167,6 @@ cc_prebuilt_library_shared {
     target: {
         android_arm64: {
             srcs: ["proprietary/system/lib64/libmtkisp_metadata_sys.so"],
-        },
-    },
-    compile_multilib: "64",
-    system_shared_libs: [],
-    check_elf_files: false,
-    prefer: true,
-}
-
-cc_prebuilt_library_shared {
-    name: "vendor.mediatek.hardware.camera.isphal@1.0",
-    owner: "xiaomi",
-    strip: {
-        none: true,
-    },
-    target: {
-        android_arm64: {
-            srcs: ["proprietary/system/lib64/vendor.mediatek.hardware.camera.isphal@1.0.so"],
         },
     },
     compile_multilib: "64",
