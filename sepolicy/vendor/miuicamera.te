@@ -22,7 +22,7 @@
 # ── GED GPU kicker node ────────────────────────────────────────────────────
 # Needed by libged_kpi.so and libged_sys.so to report frame timing to the
 # GPU governor driver (/dev/ged).
-allow priv_app ged_device:chr_file { read write open ioctl };
+#allow priv_app ged_device:chr_file { read write open ioctl };
 
 # ── Same-process HAL libs on system partition ──────────────────────────────
 # vendor.mediatek.hardware.camera.isphal@1.0.so is installed to system/lib64/
@@ -32,7 +32,7 @@ allow priv_app same_process_hal_file:file { read open getattr execute execute_no
 
 # ── Camera device nodes ────────────────────────────────────────────────────
 # Standard access to /dev/video* nodes via the camera2 HAL path.
-allow priv_app video_device:chr_file { read write open ioctl };
+#allow priv_app video_device:chr_file { read write open ioctl };
 
 # ── MTK ISP HAL HIDL service (device-specific) ────────────────────────────
 # Uncomment the line below ONLY if your ROM's base sepolicy already defines
