@@ -5,6 +5,5 @@ system/lib64/libcamera_ispinterface_jni.xiaomi.so
 system/lib64/libcamera_mianode_jni.xiaomi.so
 system/lib64/libged_kpi.so
 system/lib64/libged_sys.so
-system/lib64/libgui.so:system/lib64/libgui-xiaomi.so
 system/lib64/libmtkisp_metadata_sys.so
 system/lib64/vendor.mediatek.hardware.camera.isphal@1.0.so

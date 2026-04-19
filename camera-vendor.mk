@@ -20,6 +20,5 @@ PRODUCT_PACKAGES += \
     libcamera_mianode_jni.xiaomi \
     libged_kpi \
     libged_sys \
-    libgui-xiaomi \
     libmtkisp_metadata_sys \
     vendor.mediatek.hardware.camera.isphal@1.0

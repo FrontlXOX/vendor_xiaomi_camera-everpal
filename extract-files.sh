@@ -9,6 +9,7 @@
 set -e
 
 DEVICE=camera
+DEVICE_COMMON=camera
 VENDOR=xiaomi
 
 # Load extract_utils and do some sanity checks
@@ -24,60 +25,28 @@ if [ ! -f "${HELPER}" ]; then
 fi
 source "${HELPER}"
 
-# Default to sanitizing the vendor folder before extraction
-CLEAN_VENDOR=true
-
-KANG=
-SECTION=
-
-while [ "${#}" -gt 0 ]; do
-    case "${1}" in
-        -n | --no-cleanup )
-                CLEAN_VENDOR=false
-                ;;
-        -k | --kang )
-                KANG="--kang"
-                ;;
-        -s | --section )
-                SECTION="${2}"; shift
-                CLEAN_VENDOR=false
-                ;;
-        * )
-                SRC="${1}"
-                ;;
-    esac
-    shift
-done
-
-if [ -z "${SRC}" ]; then
-    SRC="adb"
-fi
-
-function blob_fixup() {
-    case "${1}" in
-        system/lib64/libgui-xiaomi.so)
-            # Fix soname
-            patchelf --set-soname libgui-xiaomi.so "${2}"
-            # Replace graphics common V3 NDK with V7 (Android 16 ships V7)
-            patchelf --replace-needed \
-                android.hardware.graphics.common-V3-ndk.so \
-                android.hardware.graphics.common-V7-ndk.so "${2}"
-            # Remove libs deleted from AOSP in Android 12 (BufferHub/PDX subsystem)
-            patchelf --remove-needed libbufferhub.so "${2}"
-            patchelf --remove-needed libbufferhubqueue.so "${2}"
-            patchelf --remove-needed libpdx_default_transport.so "${2}"
-            ;;
-        system/lib64/libcamera_algoup_jni.xiaomi.so|\
-        system/lib64/libcamera_mianode_jni.xiaomi.so|\
-        system/lib64/libcamera_ispinterface_jni.xiaomi.so)
-            patchelf --replace-needed libgui.so libgui-xiaomi.so "${2}"
-            ;;
-    esac
-}
-
 # Initialize the helper
-setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" false "${CLEAN_VENDOR}"
+setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" true
 
-extract "${MY_DIR}/proprietary-files.txt" "${SRC}" "${KANG}" --section "${SECTION}"
+# Warning headers and guards
+write_headers "everpal"
+sed -i 's|device/|vendor/|g' "$ANDROIDBP" "$ANDROIDMK" "$BOARDMK" "$PRODUCTMK"
 
-"${MY_DIR}/setup-makefiles.sh"
+cat << 'EOF' >> "$ANDROIDMK"
+CAMERA_LIBRARIES := libcamera_algoup_jni.xiaomi.so libcamera_mianode_jni.xiaomi.so
+
+CAMERA_SYMLINKS := $(addprefix $(TARGET_OUT_APPS_PRIVILEGED)/MiuiCamera/lib/arm64/,$(notdir $(CAMERA_LIBRARIES)))
+$(CAMERA_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "MiuiCamera lib link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /system/lib64/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(CAMERA_SYMLINKS)
+
+EOF
+
+write_makefiles "${MY_DIR}/proprietary-files.txt" true
+
+# Finish
+write_footers
