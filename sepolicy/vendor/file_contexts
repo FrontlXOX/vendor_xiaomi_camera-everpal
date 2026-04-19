@@ -16,4 +16,4 @@
 #  - Dead entries for vendor libs not shipped by this tree have been removed.
 
 # MTK ISP HAL — loaded in-process by libcamera_ispinterface_jni.xiaomi.so
-/system/lib64/vendor\.mediatek\.hardware\.camera\.isphal@1\.0\.so    u:object_r:same_process_hal_file:s0
+/(system|system_ext)/lib64/vendor\.mediatek\.hardware\.camera\.isphal@1\.0\.so  u:object_r:system_lib_file:s0
