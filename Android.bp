@@ -18,7 +18,7 @@ android_app_import {
     owner: "xiaomi",
     apk: "proprietary/system/priv-app/MiuiCamera/MiuiCamera.apk",
     overrides: [
-        "Aperture",
+      //  "Aperture",
         "Camera",
         "Camera2",
         "GoogleCameraGo",
@@ -64,7 +64,7 @@ cc_prebuilt_library_shared {
     compile_multilib: "64",
     system_shared_libs: [],
     // Re-links against our renamed libgui stub (see extract-files.sh patchelf)
-    shared_libs: ["libgui-xiaomi"],
+   // shared_libs: ["libgui-xiaomi"],
     check_elf_files: false,
     prefer: true,
 }
@@ -99,7 +99,7 @@ cc_prebuilt_library_shared {
     },
     compile_multilib: "64",
     system_shared_libs: [],
-    shared_libs: ["libgui-xiaomi"],
+   // shared_libs: ["libgui-xiaomi"],
     check_elf_files: false,
     prefer: true,
 }
@@ -141,22 +141,22 @@ cc_prebuilt_library_shared {
 // libgui-xiaomi: renamed/patched copy of libgui.so from MIUI firmware.
 // The three JNI libs above have had their DT_NEEDED rewritten to this name
 // by extract-files.sh (patchelf --replace-needed libgui.so libgui-xiaomi.so).
-cc_prebuilt_library_shared {
-    name: "libgui-xiaomi",
-    owner: "xiaomi",
-    strip: {
-        none: true,
-    },
-    target: {
-        android_arm64: {
-            srcs: ["proprietary/system/lib64/libgui-xiaomi.so"],
-        },
-    },
-    compile_multilib: "64",
-    system_shared_libs: [],
-    check_elf_files: false,
-    prefer: true,
-}
+//cc_prebuilt_library_shared {
+  //  name: "libgui-xiaomi",
+//    owner: "xiaomi",
+//    strip: {
+//        none: true,
+//    },
+//    target: {
+//        android_arm64: {
+//            srcs: ["proprietary/system/lib64/libgui-xiaomi.so"],
+//        },
+//    },
+   // compile_multilib: "64",
+  //  system_shared_libs: [],
+  //  check_elf_files: false,
+ //   prefer: true,
+//}
 
 cc_prebuilt_library_shared {
     name: "libmtkisp_metadata_sys",
