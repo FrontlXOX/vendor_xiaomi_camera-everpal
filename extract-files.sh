@@ -56,9 +56,20 @@ fi
 function blob_fixup() {
     case "${1}" in
         system/lib64/libgui-xiaomi.so)
+            # Fix soname
             patchelf --set-soname libgui-xiaomi.so "${2}"
+            # Replace graphics common V3 NDK with V7 (Android 16 ships V7)
+            patchelf --replace-needed \
+                android.hardware.graphics.common-V3-ndk.so \
+                android.hardware.graphics.common-V7-ndk.so "${2}"
+            # Remove libs deleted from AOSP in Android 12 (BufferHub/PDX subsystem)
+            patchelf --remove-needed libbufferhub.so "${2}"
+            patchelf --remove-needed libbufferhubqueue.so "${2}"
+            patchelf --remove-needed libpdx_default_transport.so "${2}"
             ;;
-        system/lib64/libcamera_algoup_jni.xiaomi.so|system/lib64/libcamera_mianode_jni.xiaomi.so|system/lib64/libcamera_ispinterface_jni.xiaomi.so)
+        system/lib64/libcamera_algoup_jni.xiaomi.so|\
+        system/lib64/libcamera_mianode_jni.xiaomi.so|\
+        system/lib64/libcamera_ispinterface_jni.xiaomi.so)
             patchelf --replace-needed libgui.so libgui-xiaomi.so "${2}"
             ;;
     esac
