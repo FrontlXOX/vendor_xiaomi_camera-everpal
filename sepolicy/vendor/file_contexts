@@ -17,3 +17,39 @@
 
 # MTK ISP HAL — loaded in-process by libcamera_ispinterface_jni.xiaomi.so
 /(system|system_ext)/lib64/vendor\.mediatek\.hardware\.camera\.isphal@1\.0\.so  u:object_r:system_lib_file:s0
+
+# MIUI Camera Algorithm Engine & Dependencies
+/(vendor|system/vendor)/lib(64)?/lib_sr_models\.so                              u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libalCFR\.so                                   u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libalLDC\.so                                   u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libalhLDC\.so                                  u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libanc_dc_base\.so                             u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libanc_dc_plugin_xiaomi_v2\.so                 u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_beautyshot\.so                      u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_dualcam_refocus_image\.so           u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_dualcam_refocus_skel\.so            u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_dualcam_refocus_video\.so           u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_hdr_detection\.so                   u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_high_dynamic_range\.so              u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_low_light_hdr\.so                   u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_portrait_lighting\.so               u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_portrait_lighting_c\.so             u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_super_night_raw\.so                 u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libarcsoft_supernight\.so                      u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libbeauty_face_interface\.so                   u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libc\+\+_shared\.so                            u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libmiai_portraitsupernight\.so                 u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libmialgo_utils\.so                            u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libmialgoengine\.so                            u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libmibokeh_mt6873\.so                          u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libmpbase\.so                                  u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libmtkisp_metadata\.so                         u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libsdk_sr\.so                                  u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libwa_depth\.so                                u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libwa_dof\.so                                  u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libwa_refocus\.so                              u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libwa_rtdof\.so                                u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libwa_widelens_undistort\.so                   u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libxmi_high_dynamic_range\.so                  u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/vendor\.mediatek\.hardware\.camera\.atms@1\.0\.so u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/vendor\.mediatek\.hardware\.camera\.isphal@1\.0\.so u:object_r:same_process_hal_file:s0
