@@ -1,0 +1,2 @@
+# Maps the Xiaomi IMiSys hardware interface string to our custom hal_misys_hwservice SELinux label
+vendor.xiaomi.hardware.misys::IMiSys    u:object_r:hal_misys_hwservice:s0
