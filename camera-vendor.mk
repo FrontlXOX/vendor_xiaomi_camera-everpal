@@ -21,4 +21,5 @@ PRODUCT_PACKAGES += \
     libged_kpi \
     libged_sys \
     libmtkisp_metadata_sys \
-    vendor.mediatek.hardware.camera.isphal@1.0
+    vendor.mediatek.hardware.camera.isphal@1.0 \
+    libsdk_sr

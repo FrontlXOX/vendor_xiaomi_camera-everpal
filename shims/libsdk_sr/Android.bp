@@ -1,0 +1,15 @@
+// Copyright (C) 2024
+// SPDX-License-Identifier: Apache-2.0
+
+cc_library_shared {
+    name: "libsdk_sr",
+    srcs: [
+        "libsdk_sr_shim.cpp",
+    ],
+    shared_libs: [
+        "libc",
+        "liblog",
+    ],
+    compile_multilib: "64",
+    vendor: true, // This ensures it gets installed to /vendor/lib64
+}
