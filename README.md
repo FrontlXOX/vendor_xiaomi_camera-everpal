@@ -1,4 +1,5 @@
-# Not Working | WIP ( builable but camera app crashes instantly )
+# Semi Working | WIP ( builable and Portrait mode works but on other modes camera app freezes )
+# IF you can help me feel free to raise an issue here to contact me. 
 
 **ported from https://gitlab.com/mmtrt/vendor_xiaomi_camera-everpal** 
 
