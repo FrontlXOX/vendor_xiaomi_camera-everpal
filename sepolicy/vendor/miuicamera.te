@@ -1,11 +1,16 @@
 # Copyright (C) 2023 Paranoid Android
 # SPDX-License-Identifier: Apache-2.0
 
-# Defines a new SELinux type for the IMiSys service and marks it as a hardware service manager
-type hal_misys_hwservice, hwservice_manager_type;
-
-# Grants the camera app permission to read, open, and execute the vendor's same-process HAL libraries
+# --- Same-process HAL libraries (see file_contexts) ---
 allow priv_app same_process_hal_file:file { read open getattr execute execute_no_trans map };
 
-# Allows the camera app to find and connect to the IMiSys hardware service we just defined
+# --- IMiSys hardware service (speculative — no denial observed yet) ---
+type hal_misys_hwservice, hwservice_manager_type;
 allow priv_app hal_misys_hwservice:hwservice_manager find;
+allow priv_app default_android_hwservice:hwservice_manager find;
+
+# --- Vendor property access ---
+allow priv_app vendor_camera_prop:file read;
+allow cameraserver vendor_camera_prop:file read;
+allow priv_app vendor_default_prop:file { read open getattr map };
+allow priv_app qemu_hw_prop:file read;
