@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 cc_library_shared {
-    name: "libsdk_sr",
+    name: "libsdk_sr_shim",
     srcs: [
         "libsdk_sr_shim.cpp",
     ],
@@ -11,5 +11,6 @@ cc_library_shared {
         "liblog",
     ],
     compile_multilib: "64",
-    vendor: true, // This ensures it gets installed to /vendor/lib64
+    vendor: true,
+    ldflags: ["-Wl,-soname,libsdk_sr.so"],
 }
