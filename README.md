@@ -1,5 +1,8 @@
-# Semi Working | WIP ( builable and Portrait mode works but on other modes camera app freezes )
-# IF you can help me feel free to raise an issue here to contact me. 
+'''
+Make sure to edit system/core/libutils/binder/Android.bp 
+
+In the libutils_binder_impl_defaults_nodeps_no_apex block add the cflag: "-DANDROID_UTILS_CALLSTACK_ENABLED=0",
+'''
 
 **ported from https://gitlab.com/mmtrt/vendor_xiaomi_camera-everpal** 
 
