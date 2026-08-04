@@ -1,16 +1,14 @@
 # Copyright (C) 2023 Paranoid Android
 # SPDX-License-Identifier: Apache-2.0
 
-# --- Same-process HAL libraries (see file_contexts) ---
+# --- Same-process HAL libraries ---
 allow priv_app same_process_hal_file:file { read open getattr execute execute_no_trans map };
 
-# --- IMiSys hardware service (speculative — no denial observed yet) ---
+# --- IMiSys hardware service ---
 type hal_misys_hwservice, hwservice_manager_type;
 allow priv_app hal_misys_hwservice:hwservice_manager find;
-allow priv_app default_android_hwservice:hwservice_manager find;
 
 # --- Vendor property access ---
-allow priv_app vendor_camera_prop:file read;
-allow cameraserver vendor_camera_prop:file read;
-allow priv_app vendor_default_prop:file { read open getattr map };
-allow priv_app qemu_hw_prop:file read;
+get_prop(priv_app, vendor_camera_prop)
+get_prop(cameraserver, vendor_camera_prop)
+get_prop(priv_app, qemu_hw_prop)
