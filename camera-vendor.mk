@@ -12,8 +12,7 @@
 PRODUCT_SOONG_NAMESPACES += \
     vendor/xiaomi/camera
 
-# All prebuilt modules declared in Android.bp
-# libsdk_sr_shim interposes sr_* calls; real libsdk_sr.so kept for SONAME.
+# libsdk_sr_shim: sr_* interpose + async MIADestroySession (see shims/libsdk_sr).
 PRODUCT_PACKAGES += \
     MiuiCamera \
     libcamera_algoup_jni.xiaomi \
