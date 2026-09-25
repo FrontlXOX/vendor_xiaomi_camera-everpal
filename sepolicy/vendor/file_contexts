@@ -45,6 +45,7 @@
 /(vendor|system/vendor)/lib(64)?/libmpbase\.so                                  u:object_r:same_process_hal_file:s0
 /(vendor|system/vendor)/lib(64)?/libmtkisp_metadata\.so                         u:object_r:same_process_hal_file:s0
 /(vendor|system/vendor)/lib(64)?/libsdk_sr\.so                                  u:object_r:same_process_hal_file:s0
+/(vendor|system/vendor)/lib(64)?/libsdk_sr_shim\.so                             u:object_r:same_process_hal_file:s0
 /(vendor|system/vendor)/lib(64)?/libwa_depth\.so                                u:object_r:same_process_hal_file:s0
 /(vendor|system/vendor)/lib(64)?/libwa_dof\.so                                  u:object_r:same_process_hal_file:s0
 /(vendor|system/vendor)/lib(64)?/libwa_refocus\.so                              u:object_r:same_process_hal_file:s0

@@ -1,16 +1,15 @@
 // Copyright (C) 2024
 // SPDX-License-Identifier: Apache-2.0
 
+// Interposer for libmialgoengine.so libsdk_sr.so calls via TARGET_LD_SHIM_LIBS.
 cc_library_shared {
     name: "libsdk_sr_shim",
     srcs: [
         "libsdk_sr_shim.cpp",
     ],
     shared_libs: [
-        "libc",
         "liblog",
     ],
     compile_multilib: "64",
     vendor: true,
-    ldflags: ["-Wl,-soname,libsdk_sr.so"],
 }
