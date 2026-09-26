@@ -2,16 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // Interposer for libmialgoengine.so libsdk_sr.so calls via TARGET_LD_SHIM_LIBS.
-// Also defers MIADestroySession to background (slow sync teardown).
 cc_library_shared {
     name: "libsdk_sr_shim",
     srcs: [
         "libsdk_sr_shim.cpp",
-        "libmialgo_destroy_shim.cpp",
     ],
     shared_libs: [
         "liblog",
-        "libdl",
     ],
     compile_multilib: "64",
     vendor: true,

@@ -16,9 +16,8 @@ android_app_import {
     ],
     preprocessed: true,
     privileged: true,
-    // AOT-compile: interpreter mode made every mode switch pay JIT warm-up.
     dex_preopt: {
-        enabled: true,
+        enabled: false,
     },
     enforce_uses_libs: false,
     optional_uses_libs: [
