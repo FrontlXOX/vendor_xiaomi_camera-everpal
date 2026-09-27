@@ -8,6 +8,9 @@ allow priv_app same_process_hal_file:file { read open getattr execute execute_no
 type hal_misys_hwservice, hwservice_manager_type;
 allow priv_app hal_misys_hwservice:hwservice_manager find;
 
+# --- MTK bgservice/isphal HAL (ISP reprocess) ---
+allow priv_app mtk_hal_bgs_hwservice:hwservice_manager find;
+
 # --- Vendor property access ---
 get_prop(priv_app, vendor_camera_prop)
 get_prop(cameraserver, vendor_camera_prop)

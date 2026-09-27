@@ -25,6 +25,20 @@ if [ ! -f "${HELPER}" ]; then
 fi
 source "${HELPER}"
 
+# Fixes for Android 15 QPR1+ / 16
+function blob_fixup() {
+    case "${1}" in
+        system/lib64/libcamera_algoup_jni.xiaomi.so)
+            [ "$2" = "" ] && return 0
+            "${SIGSCAN}" -p "08 AD 40 F9" -P "08 A9 40 F9" -f "${2}"
+            ;;
+        system/lib64/libcamera_ispinterface_jni.xiaomi.so)
+            [ "$2" = "" ] && return 0
+            "${PATCHELF}" --remove-needed libhidltransport.so "${2}"
+            ;;
+    esac
+}
+
 # Initialize the helper
 setup_vendor "${DEVICE}" "${VENDOR}" "${ANDROID_ROOT}" true
 

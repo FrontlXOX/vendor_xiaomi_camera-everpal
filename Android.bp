@@ -115,3 +115,19 @@ cc_prebuilt_library_shared {
     check_elf_files: false,
     prefer: true,
 }
+
+cc_prebuilt_library_shared {
+    name: "vendor.mediatek.hardware.camera.isphal@1.0_system",
+    owner: "xiaomi",
+    strip: { none: true },
+    target: {
+        android_arm64: {
+            srcs: ["proprietary/system/lib64/vendor.mediatek.hardware.camera.isphal@1.0.so"],
+        },
+    },
+    compile_multilib: "64",
+    stem: "vendor.mediatek.hardware.camera.isphal@1.0",
+    system_shared_libs: [],
+    check_elf_files: false,
+    prefer: true,
+}
